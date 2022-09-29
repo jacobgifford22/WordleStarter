@@ -10,6 +10,8 @@ import random
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
+LRandomWord = []
+
 def wordle():
 
     def enter_action(s):
@@ -17,6 +19,26 @@ def wordle():
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
+    gw.set_square_letter
+
+
+    gw.set_square_letter
+    gw.get_square_letter
+
+    def randomWord():
+        sRandomWord = random.choice(FIVE_LETTER_WORDS)
+        for letter in sRandomWord:
+            if letter.strip() != '':
+                LRandomWord.append(letter)
+        # print(LRandomWord)
+        # print(sRandomWord)
+        # print(LRandomWord[0])
+    
+    randomWord()
+    
+    for c in range(N_COLS):
+        gw.set_square_letter(0, c, LRandomWord[c])
+    
 
 # Startup code
 
