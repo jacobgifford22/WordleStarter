@@ -14,8 +14,21 @@ LRandomWord = []
 
 def wordle():
 
+    # The enter_action method checks if the inputted word is in the word list 
+    # and displays a success or fail message.  Returns the inputted string (upper-case).
     def enter_action(s):
-        gw.show_message("You have to implement this method.")
+        sInWordList = "no"
+
+        for i in range(len(FIVE_LETTER_WORDS)):
+            if FIVE_LETTER_WORDS[i].upper() == s.upper():
+                sInWordList = "yes"
+        
+        if sInWordList == "yes":
+            gw.show_message("That is a valid word!")
+        else:
+            gw.show_message("Not in word list.")
+
+        return s.upper()
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
@@ -29,7 +42,7 @@ def wordle():
         sRandomWord = random.choice(FIVE_LETTER_WORDS)
         for letter in sRandomWord:
             if letter.strip() != '':
-                LRandomWord.append(letter)
+                LRandomWord.append(letter.upper())
         # print(LRandomWord)
         # print(sRandomWord)
         # print(LRandomWord[0])
