@@ -39,6 +39,9 @@ def wordle():
                 gw.show_message("Not in word list.")
 
             gw.set_current_row(iRow)
+        gw.set_current_row(iRow)
+        
+        # Milestone 3 code goes here
 
         return s.upper()
     
@@ -56,6 +59,7 @@ def wordle():
         for letter in sRandomWord:
             if letter.strip() != '':
                 LRandomWord.append(letter.upper())
+
         print(LRandomWord)
         print(sRandomWord)
         print(LRandomWord[0])
