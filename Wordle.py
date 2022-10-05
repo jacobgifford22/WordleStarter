@@ -29,7 +29,7 @@ def wordle():
                 LGuessedWord.append(letter.upper())
         
         for i in range(len(FIVE_LETTER_WORDS)):
-            if FIVE_LETTER_WORDS[i].upper() == s.upper():
+            if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
                 sInWordList = "yes"
     
         if sInWordList == "yes":
@@ -42,7 +42,6 @@ def wordle():
         
         # Milestone 3 code goes here
 
-        return s.upper()
     
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
