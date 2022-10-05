@@ -12,14 +12,13 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 LRandomWord = []
 iRow = 0
+sRandomWord = ""
 
 def wordle():
-    # The enter_action method checks if the inputted word is in the word list 
-    # and displays a success or fail message.  Returns the inputted string (upper-case).
-
 
     def enter_action(s):
         global iRow
+        global sRandomWord
         sInWordList = "no"
         sGuessedWord = s.upper()
         LGuessedWord = []
@@ -27,31 +26,33 @@ def wordle():
         for letter in sGuessedWord:
             if letter.strip() != '':
                 LGuessedWord.append(letter.upper())
-        
-        for i in range(len(FIVE_LETTER_WORDS)):
-            if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
-                sInWordList = "yes"
-    
-        if sInWordList == "yes":
-            gw.show_message("That is a valid word!")
-            iRow += 1
+
+        if iRow == N_ROWS - 1:
+            gw.show_message("Sorry champ you ran out of guesses...")
+        elif sRandomWord.upper() == sGuessedWord:
+            gw.show_message("YOU GOT IT BUDDY!!!")
         else:
-            gw.show_message("Not in word list.")
-
-        gw.set_current_row(iRow)
+            for i in range(len(FIVE_LETTER_WORDS)):
+                if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
+                    sInWordList = "yes"
         
-        # Milestone 3 code goes here
+            if sInWordList == "yes":
+                gw.show_message("That is a valid word!")
+                iRow += 1
+            else:
+                gw.show_message("Not in word list.")
 
-    
+            gw.set_current_row(iRow)
+
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
     gw.set_square_letter
     gw.get_square_letter
     gw.get_current_row
     gw.set_current_row(iRow)
-    
 
     def randomWord():
+        global sRandomWord
         sRandomWord = random.choice(FIVE_LETTER_WORDS)
         for letter in sRandomWord:
             if letter.strip() != '':
