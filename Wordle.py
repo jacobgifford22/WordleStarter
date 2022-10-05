@@ -21,6 +21,13 @@ def wordle():
     def enter_action(s):
         global iRow
         sInWordList = "no"
+        sGuessedWord = s.upper()
+        LGuessedWord = []
+
+        for letter in sGuessedWord:
+            if letter.strip() != '':
+                LGuessedWord.append(letter.upper())
+        
         for i in range(len(FIVE_LETTER_WORDS)):
             if FIVE_LETTER_WORDS[i].upper() == s.upper():
                 sInWordList = "yes"
@@ -32,6 +39,8 @@ def wordle():
             gw.show_message("Not in word list.")
 
         gw.set_current_row(iRow)
+        
+        # Milestone 3 code goes here
 
         return s.upper()
     
@@ -48,6 +57,7 @@ def wordle():
         for letter in sRandomWord:
             if letter.strip() != '':
                 LRandomWord.append(letter.upper())
+
         print(LRandomWord)
         print(sRandomWord)
         print(LRandomWord[0])
