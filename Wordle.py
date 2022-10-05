@@ -24,6 +24,7 @@ def wordle():
                 sInWordList = "yes"
         
         if sInWordList == "yes":
+            # Insert code to move to next line
             gw.show_message("That is a valid word!")
         else:
             gw.show_message("Not in word list.")
