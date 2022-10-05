@@ -16,10 +16,15 @@ def wordle():
 
     def enter_action(s):
         sInWordList = "no"
-        sGuess = s.upper()
+        sGuessedWord = s.upper()
+        LGuessedWord = []
+
+        for letter in sGuessedWord:
+            if letter.strip() != '':
+                LGuessedWord.append(letter.upper())
 
         for i in range(len(FIVE_LETTER_WORDS)):
-            if FIVE_LETTER_WORDS[i].upper() == s.upper():
+            if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
                 sInWordList = "yes"
         
         if sInWordList == "yes":
@@ -28,7 +33,7 @@ def wordle():
         else:
             gw.show_message("Not in word list.")
 
-        print(sGuess)
+        print(sGuessedWord)
 
         # Milestone 3 code goes here
 
