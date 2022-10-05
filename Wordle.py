@@ -14,10 +14,9 @@ LRandomWord = []
 
 def wordle():
 
-    # The enter_action method checks if the inputted word is in the word list 
-    # and displays a success or fail message.  Returns the inputted string (upper-case).
     def enter_action(s):
         sInWordList = "no"
+        sGuess = s.upper()
 
         for i in range(len(FIVE_LETTER_WORDS)):
             if FIVE_LETTER_WORDS[i].upper() == s.upper():
@@ -28,7 +27,9 @@ def wordle():
         else:
             gw.show_message("Not in word list.")
 
-        return s.upper()
+        print(sGuess)
+
+        # Milestone 3 code goes here
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
