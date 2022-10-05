@@ -12,6 +12,7 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 LRandomWord = []
 iRow = 0
+sRandomWord = ""
 
 def wordle():
     # The enter_action method checks if the inputted word is in the word list 
@@ -20,18 +21,24 @@ def wordle():
 
     def enter_action(s):
         global iRow
+        global sRandomWord
         sInWordList = "no"
-        for i in range(len(FIVE_LETTER_WORDS)):
-            if FIVE_LETTER_WORDS[i].upper() == s.upper():
-                sInWordList = "yes"
-    
-        if sInWordList == "yes":
-            gw.show_message("That is a valid word!")
-            iRow += 1
+        if iRow == 5:
+            gw.show_message("Sorry champ you ran out of guesses...")
+        elif sRandomWord.upper() == s.upper():
+            gw.show_message("YOU GOT IT BUDDY!!!")
         else:
-            gw.show_message("Not in word list.")
+            for i in range(len(FIVE_LETTER_WORDS)):
+                if FIVE_LETTER_WORDS[i].upper() == s.upper():
+                    sInWordList = "yes"
+        
+            if sInWordList == "yes":
+                gw.show_message("That is a valid word!")
+                iRow += 1
+            else:
+                gw.show_message("Not in word list.")
 
-        gw.set_current_row(iRow)
+            gw.set_current_row(iRow)
 
         return s.upper()
     
@@ -44,6 +51,7 @@ def wordle():
     
 
     def randomWord():
+        global sRandomWord
         sRandomWord = random.choice(FIVE_LETTER_WORDS)
         for letter in sRandomWord:
             if letter.strip() != '':
