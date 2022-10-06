@@ -26,16 +26,56 @@ def wordle():
         sGuessedWord = s.upper()
         LGuessedWord = []
 
+        # Updates squares to the correct color
         def changeWordleSquare(LRandomWord):
-            print("Hello " + str(LRandomWord))
+
+            # Sets a count of each letter in a word
+            def setLetterDictionary(LWord):
+                DLetters = {}
+                
+                for letter in LWord:
+                    if letter in DLetters:
+                        DLetters.update({letter: DLetters[letter] + 1})
+                    else:
+                        DLetters.update({letter: 1})
+                
+                return DLetters
+
+            # Sets each letter in word with a count of 0
+            def setZeroDictionary(LWord):
+                DLetters = {}
+
+                for letter in LWord:
+                    DLetters.update({letter: 0})
+
+                return DLetters
+
+            # Dictionaries for the counts of each letter in guess and random word
+            DGuessLetters = setLetterDictionary(LGuessedWord)
+            DRandomLetters = setLetterDictionary(LRandomWord)
+
+            # Dictionaries for correct letters and present letters (initializes count to 0)
+            DCorrectLetters = setZeroDictionary(LRandomWord)
+            # DPresentLetters = setZeroDictionary(LRandomWord)
 
             for i in range(len(LGuessedWord)):
-                if LGuessedWord[i].upper() == LRandomWord[i].upper():
-                    gw.set_square_color(iRow, i, CORRECT_COLOR) 
-                elif LGuessedWord[i].upper() in sRandomWord.upper() :  
-                    gw.set_square_color(iRow, i, PRESENT_COLOR)
+                # If guessed letter is in correct square
+                if LGuessedWord[i] == LRandomWord[i]:
+                    gw.set_square_color(iRow, i, CORRECT_COLOR)
+                    DCorrectLetters.update({LRandomWord[i]: DCorrectLetters[LRandomWord[i]] + 1})
                 else:
-                    gw.set_square_color(iRow, i, MISSING_COLOR)
+                    # If guessed letter is in word, but not correct square
+                    if LGuessedWord[i] in LRandomWord:
+                        # If duplicate guessed letter and correct letter is all green
+                        if DRandomLetters[LGuessedWord[i]] == DCorrectLetters[LGuessedWord[i]]:
+                            gw.set_square_color(iRow, i, MISSING_COLOR)
+                        # If duplicate guessed letter and correct letter is not all green
+                        elif DRandomLetters[LGuessedWord[i]] > DCorrectLetters[LGuessedWord[i]]:
+                            gw.set_square_color(iRow, i, PRESENT_COLOR)
+                            DCorrectLetters.update({LGuessedWord[i]: DCorrectLetters[LGuessedWord[i]] + 1})
+                    # If guessed letter isn't in word
+                    else:
+                        gw.set_square_color(iRow, i, MISSING_COLOR)
 
         for letter in sGuessedWord:
             if letter.strip() != '':
