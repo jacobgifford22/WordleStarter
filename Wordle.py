@@ -7,7 +7,7 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 
 import random
 
-from pydantic import MissingError
+# from pydantic import MissingError
 
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR, WordleGWindow, N_COLS, N_ROWS
@@ -63,19 +63,23 @@ def wordle():
                 if LGuessedWord[i] == LRandomWord[i]:
                     gw.set_square_color(iRow, i, CORRECT_COLOR)
                     DCorrectLetters.update({LRandomWord[i]: DCorrectLetters[LRandomWord[i]] + 1})
+                    gw.set_key_color(LGuessedWord[i], CORRECT_COLOR)
+
                 else:
                     # If guessed letter is in word, but not correct square
                     if LGuessedWord[i] in LRandomWord:
                         # If duplicate guessed letter and correct letter is all green
                         if DRandomLetters[LGuessedWord[i]] == DCorrectLetters[LGuessedWord[i]]:
-                            gw.set_square_color(iRow, i, MISSING_COLOR)
+                            gw.set_square_color(iRow, i, MISSING_COLOR) 
                         # If duplicate guessed letter and correct letter is not all green
                         elif DRandomLetters[LGuessedWord[i]] > DCorrectLetters[LGuessedWord[i]]:
                             gw.set_square_color(iRow, i, PRESENT_COLOR)
+                            gw.set_key_color(LGuessedWord[i], PRESENT_COLOR)
                             DCorrectLetters.update({LGuessedWord[i]: DCorrectLetters[LGuessedWord[i]] + 1})
                     # If guessed letter isn't in word
                     else:
                         gw.set_square_color(iRow, i, MISSING_COLOR)
+                        gw.set_key_color(LGuessedWord[i], MISSING_COLOR)
 
         for letter in sGuessedWord:
             if letter.strip() != '':
