@@ -63,9 +63,16 @@ def wordle():
                 if LGuessedWord[i] == LRandomWord[i]:
                     gw.set_square_color(iRow, i, CORRECT_COLOR)
                     DCorrectLetters.update({LRandomWord[i]: DCorrectLetters[LRandomWord[i]] + 1})
-                    gw.set_key_color(LGuessedWord[i], CORRECT_COLOR)
+                    # Would we set key to PRESENT_COLOR if there are duplicate letters and only one correct?
+                    if DRandomLetters[LGuessedWord[i]] == DCorrectLetters[LGuessedWord[i]]:
+                        gw.set_key_color(LGuessedWord[i], CORRECT_COLOR)
+                    else:
+                        gw.set_key_color(LGuessedWord[i], PRESENT_COLOR)
 
                 else:
+                    # Insert logic for if guessed letter is in word 1 time, but not correct square
+                    # Fix logic for if letter is in guessed word > 1 time
+
                     # If guessed letter is in word, but not correct square
                     if LGuessedWord[i] in LRandomWord:
                         # If duplicate guessed letter and correct letter is all green
@@ -85,19 +92,18 @@ def wordle():
             if letter.strip() != '':
                 LGuessedWord.append(letter.upper())
 
-        if iRow == N_ROWS - 1:
-            changeWordleSquare(LRandomWord)
-            gw.show_message("Sorry champ you ran out of guesses...")
-        elif sRandomWord.upper() == sGuessedWord:
+        if sRandomWord.upper() == sGuessedWord:
             changeWordleSquare(LRandomWord)
             gw.show_message("YOU GOT IT BUDDY!!!")
+        elif iRow == N_ROWS - 1:
+            changeWordleSquare(LRandomWord)
+            gw.show_message("Sorry champ you ran out of guesses...")
         else:
             for i in range(len(FIVE_LETTER_WORDS)):
                 if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
                     sInWordList = "yes"
         
             if sInWordList == "yes":
-                gw.show_message("That is a valid word!")
                 changeWordleSquare(LRandomWord)
 
                 iRow += 1
@@ -127,8 +133,8 @@ def wordle():
     
     randomWord()
 
-    for c in range(N_COLS):
-        gw.set_square_letter(0, c, LRandomWord[c])
+    # for c in range(N_COLS):
+    #     gw.set_square_letter(0, c, LRandomWord[c])
   
 
 # Startup code
