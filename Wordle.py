@@ -1,4 +1,5 @@
 # File: Wordle.py
+# Authors: Josh Brown, Jake LeBaron, Ben Craythorne, Thomas Blackwelder, Jacob Gifford
 
 """
 This module is the starter file for the Wordle assignment.
