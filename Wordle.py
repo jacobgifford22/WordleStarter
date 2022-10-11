@@ -16,6 +16,7 @@ from WordleGraphics import CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR, WordleGW
 LRandomWord = []
 iRow = 0
 sRandomWord = ""
+sGameOver = "no"
 
 def wordle():
 
@@ -23,6 +24,7 @@ def wordle():
         global iRow
         global sRandomWord
         global LRandomWord
+        global sGameOver
         sInWordList = "no"
         sGuessedWord = s.upper()
         LGuessedWord = []
@@ -87,29 +89,42 @@ def wordle():
                         gw.set_square_color(iRow, i, MISSING_COLOR)
                         gw.set_key_color(LGuessedWord[i], MISSING_COLOR)
 
-        for letter in sGuessedWord:
-            if letter.strip() != '':
-                LGuessedWord.append(letter.upper())
+        # Checks whether game is over to avoid throwing an error
+        if sGameOver == "no":
 
-        if sRandomWord.upper() == sGuessedWord:
-            changeWordleSquare(LRandomWord)
-            gw.show_message("YOU GOT IT BUDDY!!!")
-        elif iRow == N_ROWS - 1:
-            changeWordleSquare(LRandomWord)
-            gw.show_message("Sorry champ you ran out of guesses...")
-        else:
-            for i in range(len(FIVE_LETTER_WORDS)):
-                if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
-                    sInWordList = "yes"
-        
-            if sInWordList == "yes":
+            for letter in sGuessedWord:
+                if letter.strip() != '':
+                    LGuessedWord.append(letter.upper())
+
+            # If guessed word is correct
+            if sRandomWord.upper() == sGuessedWord:
                 changeWordleSquare(LRandomWord)
-
-                iRow += 1
+                gw.show_message("YOU GOT IT BUDDY!!!")
+                sGameOver = "yes"
+                
             else:
-                gw.show_message("Not in word list.")
+                for i in range(len(FIVE_LETTER_WORDS)):
+                    if FIVE_LETTER_WORDS[i].upper() == sGuessedWord:
+                        sInWordList = "yes"
 
-            gw.set_current_row(iRow)
+                # If valid word
+                if sInWordList == "yes":
+                    changeWordleSquare(LRandomWord)
+
+                    # If maximum guesses exceeded
+                    if iRow == N_ROWS - 1:
+                        gw.show_message("Sorry champ you ran out of guesses...")
+                        sGameOver = "yes"
+                    
+                    iRow += 1
+                    
+                else:
+                    gw.show_message("Not in word list.")
+
+                if iRow <= N_ROWS - 1:
+                    gw.set_current_row(iRow)
+
+        
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
