@@ -113,7 +113,7 @@ def wordle():
 
                     # If maximum guesses exceeded
                     if iRow == N_ROWS - 1:
-                        gw.show_message("Sorry champ you ran out of guesses...")
+                        gw.show_message("Sorry champ you ran out of guesses. \nThe correct word was " + sRandomWord.upper() + ".")
                         sGameOver = "yes"
                     
                     iRow += 1
