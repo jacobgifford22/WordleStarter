@@ -51,7 +51,7 @@ def wordle():
                 return DLetters
 
             # Dictionaries for the counts of each letter in guess and random word
-            DGuessLetters = setLetterDictionary(LGuessedWord)
+            # DGuessLetters = setLetterDictionary(LGuessedWord)
             DRandomLetters = setLetterDictionary(LRandomWord)
 
             # Dictionaries for correct letters and present letters (initializes count to 0)
@@ -63,16 +63,14 @@ def wordle():
                 if LGuessedWord[i] == LRandomWord[i]:
                     gw.set_square_color(iRow, i, CORRECT_COLOR)
                     DCorrectLetters.update({LRandomWord[i]: DCorrectLetters[LRandomWord[i]] + 1})
-                    # Would we set key to PRESENT_COLOR if there are duplicate letters and only one correct?
+                    # Set key to PRESENT_COLOR if there are duplicate letters and only one correct
                     if DRandomLetters[LGuessedWord[i]] == DCorrectLetters[LGuessedWord[i]]:
                         gw.set_key_color(LGuessedWord[i], CORRECT_COLOR)
                     else:
                         gw.set_key_color(LGuessedWord[i], PRESENT_COLOR)
 
-                else:
-                    # Insert logic for if guessed letter is in word 1 time, but not correct square
-                    # Fix logic for if letter is in guessed word > 1 time
-
+            for i in range(len(LGuessedWord)):
+                if LGuessedWord[i] != LRandomWord[i]:
                     # If guessed letter is in word, but not correct square
                     if LGuessedWord[i] in LRandomWord:
                         # If duplicate guessed letter and correct letter is all green
@@ -112,11 +110,6 @@ def wordle():
 
             gw.set_current_row(iRow)
 
-            
-
-        
-                    
-
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
     gw.set_square_letter
@@ -133,9 +126,9 @@ def wordle():
     
     randomWord()
 
+    # Uncomment this to see word displayed in top row
     # for c in range(N_COLS):
     #     gw.set_square_letter(0, c, LRandomWord[c])
-  
 
 # Startup code
 
